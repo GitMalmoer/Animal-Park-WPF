@@ -10,7 +10,6 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
 {
     public class Bird : Animal
     {
-        // WHEN YOU ADD NEW BIRD SPECIE REMEMBER TO ADD IT INTO BIRDSPECIES ENUM!
         public int Wings_Spread { get; set; }
         public double Beak_Length { get; set; }
 

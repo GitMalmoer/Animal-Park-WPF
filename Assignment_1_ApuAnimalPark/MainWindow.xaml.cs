@@ -12,10 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Assignment_1_ApuAnimalPark.Data;
 using Assignment_1_ApuAnimalPark.Objects;
 using Assignment_1_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_1_ApuAnimalPark.Objects.Birds;
 using Assignment_1_ApuAnimalPark.Objects.Mammals;
+using Assignment_1_ApuAnimalPark.Objects.Marines;
 using Microsoft.VisualBasic;
 
 namespace Assignment_1_ApuAnimalPark
@@ -47,6 +49,7 @@ namespace Assignment_1_ApuAnimalPark
             lstCategory.SelectedItem = CategoryType.Mammal;
             // SETTING UP THE DEFAULT SPECIE IN GUI AT THE PROGRAM START
             lstSpecies.SelectedItem = MammalSpecies.Dog;
+
         }
 
         private void HideAllInputsSpecification()
@@ -73,6 +76,39 @@ namespace Assignment_1_ApuAnimalPark
 
             lblSpecies2.Visibility = Visibility.Hidden;
             txtSpecies2.Visibility = Visibility.Hidden;
+
+            cmbSpecies.Visibility = Visibility.Hidden;
+            lblComboSpecies.Visibility = Visibility.Hidden;
+        }
+
+        private void InitializeCutenessComboBoxData()
+        {
+            cmbSpecies.ItemsSource = null;
+            cmbSpecies.Items.Clear();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                cmbSpecies.Items.Add(i);
+            }
+            cmbSpecies.SelectedIndex = 0;
+        }
+
+        private void InitializeYesNoComboBoxData()
+        {
+            // this method changes combobox into yes no enums
+            cmbSpecies.ItemsSource = null;
+            cmbSpecies.Items.Clear();
+            cmbSpecies.ItemsSource = Enum.GetValues(typeof(YesNoEnum));
+            cmbSpecies.SelectedIndex = 0;
+        }
+
+        private void InitializeAnimalEnvironmentComboBoxData()
+        {
+            // this method changes combobox into animal environment enums
+            cmbSpecies.ItemsSource = null;
+            cmbSpecies.Items.Clear();
+            cmbSpecies.ItemsSource = Enum.GetValues(typeof(AnimalEnvironment));
+            cmbSpecies.SelectedIndex = 0;
         }
 
         private void lstCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,7 +134,7 @@ namespace Assignment_1_ApuAnimalPark
                     SelectedMammal();
                     break;
                 case CategoryType.Marine:
-
+                    SelectedMarine();
                     break;
                 case CategoryType.Reptile:
 
@@ -112,7 +148,7 @@ namespace Assignment_1_ApuAnimalPark
             Mammal mammal;
             grpSpecifications.Header = "Specification Mammal";
             lblSpecs1.Content = nameof(mammal.Number_Of_Teeth).Replace("_", " ");
-            lblSpecs2.Content = nameof(mammal.Tail_Length).Replace("_", " ");
+            lblSpecs2.Content = nameof(mammal.Tail_Length).Replace("_", " ") + " (Cm)";
 
             lblSpecs1.Visibility = Visibility.Visible;
             lblSpecs2.Visibility = Visibility.Visible;
@@ -126,8 +162,8 @@ namespace Assignment_1_ApuAnimalPark
         {
             Bird bird;
             grpSpecifications.Header = "Specification Bird";
-            lblSpecs1.Content = nameof(bird.Wings_Spread).Replace("_", " ");
-            lblSpecs2.Content = nameof(bird.Beak_Length).Replace("_", " ");
+            lblSpecs1.Content = nameof(bird.Wings_Spread).Replace("_", " ") + " (Cm)";
+            lblSpecs2.Content = nameof(bird.Beak_Length).Replace("_", " ") +" (Cm)";
 
             lblSpecs1.Visibility = Visibility.Visible;
             lblSpecs2.Visibility = Visibility.Visible;
@@ -138,6 +174,22 @@ namespace Assignment_1_ApuAnimalPark
             lstSpecies.ItemsSource = Enum.GetValues(typeof(BirdSpecies));
         }
 
+        private void SelectedMarine()
+        {
+            Marine marine;
+            grpSpecifications.Header = "Specification Marine";
+
+            lblSpecs1.Content = nameof(marine.Weight) + " (Kg)";
+            lblSpecs2.Content = nameof(marine.Sound);
+
+            lblSpecs1.Visibility = Visibility.Visible;
+            lblSpecs2.Visibility = Visibility.Visible;
+            txtSpecs1.Visibility = Visibility.Visible;
+            txtSpecs2.Visibility = Visibility.Visible;
+
+            lstSpecies.ItemsSource = Enum.GetValues(typeof(MarineSpecies));
+        }
+
         private void lstSpecies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             HideAllInputsSpecies();
@@ -146,15 +198,18 @@ namespace Assignment_1_ApuAnimalPark
             {
                 Enum selectedEnum = (Enum)lstSpecies.SelectedItem;
 
-                string selectedSpecie = selectedEnum.GetType().Name;
+                //string selectedSpecie = selectedEnum.GetType().Name; this method was used because upper one didnt work and now it works?!
 
-                switch (selectedSpecie)
+                switch (selectedEnum)
                 {
-                    case "MammalSpecies":
+                    case MammalSpecies:
                         SelectedMammalSpecie();
                         break;
-                    case "BirdSpecies":
+                    case BirdSpecies:
                         SelectedBirdSpecie();
+                        break;
+                    case MarineSpecies:
+                        SelectedMarineSpecie();
                         break;
                 }
             }
@@ -163,17 +218,23 @@ namespace Assignment_1_ApuAnimalPark
 
         private void SelectedMammalSpecie()
         {
-            // THIS METHODS ONLY SETS UP THE GUI. THIS SET UP IS MADE ONLY FOR MAMMALS
+            // THIS METHODS ONLY SETS UP THE GUI. THIS SET UP IS MADE ONLY FOR MAMMALS switch is used for further implementations
             Enum selectedEnum = (Enum)lstSpecies.SelectedItem;
 
             switch (selectedEnum)
             {
                 case MammalSpecies.Cat:
+                    InitializeCutenessComboBoxData();
                     Cat cat;
                     grpSpecies.Header = "Cat Specification";
                     lblSpecies1.Content = nameof(cat.Breed);
+                    lblComboSpecies.Content = nameof(cat.Cuteness);
+
                     lblSpecies1.Visibility = Visibility.Visible;
                     txtSpecies1.Visibility = Visibility.Visible;
+                    cmbSpecies.Visibility = Visibility.Visible;
+                    lblComboSpecies.Visibility = Visibility.Visible;
+
                     break;
                 case MammalSpecies.Dog:
                     Dog dog;
@@ -187,7 +248,7 @@ namespace Assignment_1_ApuAnimalPark
 
         private void SelectedBirdSpecie()
         {
-            // THIS METHODS ONLY SETS UP THE GUI. THIS SET UP IS MADE ONLY FOR BIRDS
+            // THIS METHODS ONLY SETS UP THE GUI. THIS SET UP IS MADE ONLY FOR BIRDS switch is used for further implementations
             Enum selectedEnum = (Enum)lstSpecies.SelectedItem;
 
             switch (selectedEnum)
@@ -205,6 +266,34 @@ namespace Assignment_1_ApuAnimalPark
                     break;
             }
         }
+        
+        private void SelectedMarineSpecie()
+        {
+            // THIS METHODS ONLY SETS UP THE MARINES GUI switch is used for further implementations
+            Enum selectedEnum = (Enum)lstSpecies.SelectedItem;
+
+            switch (selectedEnum)
+            {
+                case MarineSpecies.Seal:
+                    InitializeYesNoComboBoxData(); 
+                    Seal seal;
+                    grpSpecies.Header = "Seal Specification";
+                    lblSpecies2.Content = nameof(seal.Can_do_tricks).Replace("_", " ");
+
+                    cmbSpecies.Visibility = Visibility.Visible;
+                    lblSpecies2.Visibility = Visibility.Visible;
+                    break;
+                case MarineSpecies.Dolphin:
+                    InitializeAnimalEnvironmentComboBoxData();
+                    grpSpecies.Header = "Dolphin Specification";
+                    lblSpecies2.Content = "Environment: ";
+
+                    cmbSpecies.Visibility = Visibility.Visible;
+                    lblSpecies2.Visibility = Visibility.Visible;
+                    break;
+
+            }
+        }
 
         private void BtnAddAnimal_Click(object sender, RoutedEventArgs e)
         {
@@ -212,13 +301,10 @@ namespace Assignment_1_ApuAnimalPark
 
             if (animal != null)
             {
+                animal.Id = animalsManager.IdGenerator();
                 animalsManager._animals.Add(animal);
                 UpdateListOfAnimals();
             }
-
-            //MessageBox.Show(((Dog)animal).Breed);
-
-
         }
 
         private Animal ReadInputs()
@@ -232,12 +318,16 @@ namespace Assignment_1_ApuAnimalPark
                 case CategoryType.Mammal:
                     if (selectedSpecie == MammalSpecies.Dog.ToString())
                     {
+                        // Mammal specifications
                         int numOfTeeth = 0; // this is label: txtSpecs1.Text
                         int tailLength = 0; // this is label: txtSpecs2.Text
+
+                        //Specie specification
                         string breed = txtSpecies1.Text; // this label represents breed, all those labels are assigned by SelectedMammalSpecie() method at the runtime.
 
                         // VALIDATION FOR ABOVE VARIABLES
-                        if ((int.TryParse(txtSpecs1.Text, out numOfTeeth)) && (int.TryParse(txtSpecs2.Text, out tailLength)))
+                        if ((int.TryParse(txtSpecs1.Text, out numOfTeeth)) &&
+                            (int.TryParse(txtSpecs2.Text, out tailLength)))
                         {
                             animal = new Dog(numOfTeeth, tailLength, breed);
                             ReadCommonValues(ref animal);
@@ -247,16 +337,22 @@ namespace Assignment_1_ApuAnimalPark
                             MessageBox.Show("Number of teeth or Tail Length is invalid");
                         }
                     }
+
                     if (selectedSpecie == MammalSpecies.Cat.ToString())
                     {
+                        // Mammal specifications
                         int numOfTeeth = 0; // this is label: txtSpecs1.Text
                         int tailLength = 0; // this is label: txtSpecs2.Text
+
+                        // Specie specifications
+                        int cuteness = (int)cmbSpecies.SelectedValue; // cuteness from combobox
                         string breed = txtSpecies1.Text; // this label represents breed, all those labels are assigned by SelectedMammalSpecie() method at the runtime.
 
                         // VALIDATION FOR ABOVE VARIABLES
-                        if ((int.TryParse(txtSpecs1.Text, out numOfTeeth)) && (int.TryParse(txtSpecs2.Text, out tailLength)))
+                        if ((int.TryParse(txtSpecs1.Text, out numOfTeeth)) &&
+                            (int.TryParse(txtSpecs2.Text, out tailLength)))
                         {
-                            animal = new Cat(numOfTeeth, tailLength, breed);
+                            animal = new Cat(numOfTeeth, tailLength, breed, cuteness);
                             ReadCommonValues(ref animal);
                         }
                         else
@@ -265,15 +361,15 @@ namespace Assignment_1_ApuAnimalPark
                         }
                     }
 
-
                     break;
+
                 case CategoryType.Bird:
                     if (selectedSpecie == BirdSpecies.Eagle.ToString())
                     {
                         // Bird specification
                         int wingsSpread = 0; // specs1
                         double beakLength = 0; // specs2
-                        
+
                         // specie variables
                         string color = txtSpecies2.Text;
                         int flightSpeed = 0; // this is label: txtSpecies1.Text (species1)
@@ -297,9 +393,54 @@ namespace Assignment_1_ApuAnimalPark
                             ReadCommonValues(ref animal);
                         }
                     }
-                    break;
-            }
 
+                    break;
+                case CategoryType.Marine:
+                    if (selectedSpecie == MarineSpecies.Seal.ToString())
+                    {
+                        // Marine specifications
+                        double weight = 0;
+                        string sound = txtSpecs2.Text;
+
+                        // Specie specifications
+                        string canTricks = cmbSpecies.SelectedItem.ToString();
+
+                        // VALIDATION FOR ABOVE VARIABLES
+                        if ((double.TryParse(txtSpecs1.Text, out weight)))
+                        {
+                            animal = new Seal(weight, sound, canTricks);
+                            ReadCommonValues(ref animal);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Weight is invalid");
+                        }
+                    }
+
+                    if (selectedSpecie == MarineSpecies.Dolphin.ToString())
+                    {
+                        // Marine specifications
+                        double weight = 0;
+                        string sound = txtSpecs2.Text;
+
+                        // Specie specifications
+                        string Environment = cmbSpecies.SelectedItem.ToString();
+
+                        // VALIDATION FOR ABOVE VARIABLES
+                        if ((double.TryParse(txtSpecs1.Text, out weight)))
+                        {
+                            animal = new Dolphin(weight, sound, Environment);
+                            ReadCommonValues(ref animal);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Weight is invalid");
+                        }
+                    }
+                    break;
+
+
+            }
             return animal;
         }
 
@@ -362,6 +503,12 @@ namespace Assignment_1_ApuAnimalPark
                     break;
                 case Eagle eagle:
                     MessageBox.Show(eagle.ToString());
+                    break;
+                case Seal seal:
+                    MessageBox.Show(seal.ToString());
+                    break;
+                case Dolphin dolphin:
+                    MessageBox.Show(dolphin.ToString());
                     break;
             }
         }

@@ -86,10 +86,14 @@
                             <Label x:Name="lblSpecies1" Grid.Column="0" Grid.Row="0" Content="lblSpecsies1"></Label>
                             <Label x:Name="lblSpecies2" Grid.Column="0" Grid.Row="1" Content="lblSpecies2"></Label>
                             <Label x:Name="lblSpecies3" Grid.Column="0" Grid.Row="2" Content="lblSpecies3"></Label>
+                            <!--Hidden Cuteness-->
+                            <Label x:Name="lblComboSpecies" Content="lblCombo" Grid.Column="0" Grid.Row="1" Visibility="Hidden"></Label>
 
                             <TextBox x:Name="txtSpecies1" Grid.Column="1" Grid.Row="0"></TextBox>
                             <TextBox x:Name="txtSpecies2" Grid.Column="1" Grid.Row="1"></TextBox>
                             <TextBox x:Name="txtSpecies3" Grid.Column="1" Grid.Row="2"></TextBox>
+                            <!--Hidden Cuteness-->
+                            <ComboBox x:Name="cmbSpecies" Grid.Column="1" Grid.Row="1" Visibility="Hidden"></ComboBox>
                         </Grid>
                     </GroupBox>
 

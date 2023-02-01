@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Objects\AnimalsGen\Insects\" />
-    <Folder Include="Objects\Marines\" />
     <Folder Include="Objects\Reptiles\" />
   </ItemGroup>
 

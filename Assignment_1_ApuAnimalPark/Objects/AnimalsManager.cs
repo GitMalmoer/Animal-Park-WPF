@@ -17,5 +17,10 @@ namespace Assignment_1_ApuAnimalPark.Objects
         }
 
 
+        public int IdGenerator()
+        {
+            return _animals.Count + 1;
+        }
+
     }
 }
