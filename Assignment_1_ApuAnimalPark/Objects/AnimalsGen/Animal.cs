@@ -8,6 +8,8 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen
 {
     public class Animal
     {
+        // WHEN YOU ADD NEW ANIMAL SPECIE REMEMBER TO ADD IT INTO <ANIMAL_NAME>SPECIES ENUM!
+
         public int Id { get; set; }
         public string Name { get; set; }
         public double Age { get; set; }

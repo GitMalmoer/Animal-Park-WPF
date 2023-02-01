@@ -194,10 +194,9 @@ namespace Assignment_1_ApuAnimalPark
             {
                 case BirdSpecies.Eagle:
                     Eagle eagle;
-                    MessageBox.Show("This is an eagle");
                     grpSpecies.Header = "Eagle Specification";
-                    lblSpecies1.Content = nameof(eagle._Flight_Speed).Replace("_", " ");
-                    lblSpecies2.Content = nameof(eagle._Color);
+                    lblSpecies1.Content = nameof(eagle.Flight_Speed).Replace("_", " ");
+                    lblSpecies2.Content = nameof(eagle.Color);
 
                     lblSpecies1.Visibility = Visibility.Visible;
                     txtSpecies1.Visibility = Visibility.Visible;
@@ -271,25 +270,31 @@ namespace Assignment_1_ApuAnimalPark
                 case CategoryType.Bird:
                     if (selectedSpecie == BirdSpecies.Eagle.ToString())
                     {
+                        // Bird specification
+                        int wingsSpread = 0; // specs1
+                        double beakLength = 0; // specs2
+                        
                         // specie variables
                         string color = txtSpecies2.Text;
                         int flightSpeed = 0; // this is label: txtSpecies1.Text (species1)
 
-                        // Bird specification
-                        int wingsSpread = 0; // specs1
-                        double beakLength = 0; // specs2
-
-
-
                         // VALIDATION FOR ABOVE VARIABLES
-                        if ((int.TryParse(txtSpecies1.Text, out flightSpeed)) && (int.TryParse(txtSpecs1.Text, out wingsSpread)) && double.TryParse(txtSpecs2.Text, out beakLength))
+                        if (!int.TryParse(txtSpecies1.Text, out flightSpeed))
                         {
-                            animal = new Eagle(flightSpeed, color, wingsSpread, beakLength);
-                            ReadCommonValues(ref animal);
+                            MessageBox.Show("Error: Flight speed must be a valid integer.");
+                        }
+                        else if (!int.TryParse(txtSpecs1.Text, out wingsSpread))
+                        {
+                            MessageBox.Show("Error: Wings spread must be a valid integer.");
+                        }
+                        else if (!double.TryParse(txtSpecs2.Text, out beakLength))
+                        {
+                            MessageBox.Show("Error: Beak length must be a valid double.");
                         }
                         else
                         {
-                            MessageBox.Show("Flight speed must be int, wings spread must be int and beak length must be double ");
+                            animal = new Eagle(flightSpeed, color, wingsSpread, beakLength);
+                            ReadCommonValues(ref animal);
                         }
                     }
                     break;
@@ -354,6 +359,9 @@ namespace Assignment_1_ApuAnimalPark
                     break;
                 case Cat cat:
                     MessageBox.Show(cat.ToString());
+                    break;
+                case Eagle eagle:
+                    MessageBox.Show(eagle.ToString());
                     break;
             }
         }
