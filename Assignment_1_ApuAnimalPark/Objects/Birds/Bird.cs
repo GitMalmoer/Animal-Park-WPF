@@ -10,8 +10,8 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
 {
     public class Bird : Animal
     {
-        public int Wings_Spread { get; set; }
-        public double Beak_Length { get; set; }
+        private int Wings_Spread { get; set; }
+        private double Beak_Length { get; set; }
 
         public Bird(int wingsSpread, double beakLength)
         {
@@ -22,7 +22,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
         public override string ToString()
         {
             string strOut = base.ToString();
-            strOut += string.Format("Wings spread: {0,-25}\nBeak Length: {1,-25}\nAnimal: {2,-25}\n", Wings_Spread.ToString(),Beak_Length.ToString(),typeof(Dog).Name);
+            strOut += string.Format("Wings spread: {0,-25}\nBeak Length: {1,-25}\n", Wings_Spread.ToString(),Beak_Length.ToString());
 
             return strOut;
         }

@@ -9,7 +9,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects
 {
     public class Insect : Animal
     {
-        public int Number_Of_Legs { get; set; }
+        private int Number_Of_Legs { get; set; }
 
         public Insect(int numberOfLegs)
         {

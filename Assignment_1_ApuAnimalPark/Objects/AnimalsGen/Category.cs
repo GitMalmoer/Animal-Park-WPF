@@ -11,7 +11,6 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen
         Bird,
         Insect,
         Mammal,
-        Marine,
-        Reptile
+        Marine
     }
 }

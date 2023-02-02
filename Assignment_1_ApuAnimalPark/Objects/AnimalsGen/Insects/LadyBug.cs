@@ -18,7 +18,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects
         public override string ToString()
         {
             string strOut = base.ToString();
-            strOut += string.Format("Dots number: {0,-25}\n", Number_Of_Dots);
+            strOut += string.Format("Dots number: {0,-25}\nAnimal: {1,-25}", Number_Of_Dots, typeof(LadyBug).Name);
             return strOut;
         }
     }

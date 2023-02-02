@@ -42,10 +42,10 @@
                         </DockPanel>
                     </StackPanel>
                     <!--Grp Specifications-->
-                    <GroupBox x:Name="grpSpecifications" Margin="0 18 0 0" BorderBrush="Black" Height="100" Grid.Column="0">
+                    <GroupBox x:Name="grpSpecifications" Margin="0 18 0 0" BorderBrush="Black" Height="115" Grid.Column="0">
                         <Grid Margin="0 3 0 3">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -63,18 +63,18 @@
                             <TextBox x:Name="txtSpecs3" Grid.Column="1" Grid.Row="2"></TextBox>
                         </Grid>
                     </GroupBox>
-                    
+
                 </StackPanel>
 
                 <!--Category-->
                 <StackPanel Grid.Column="1" Margin="5">
                     <Label Content="Category type" HorizontalAlignment="Center"></Label>
-                    <ListBox x:Name="lstCategory" Height="100" Margin="3" SelectionChanged="lstCategory_SelectionChanged"></ListBox>
+                    <ListBox x:Name="lstCategory" Height="115" Margin="3" SelectionChanged="lstCategory_SelectionChanged"></ListBox>
                     <!--Grp Species-->
                     <GroupBox x:Name="grpSpecies" BorderBrush="Black" BorderThickness="1" Height="100"  Grid.Column="0">
                         <Grid Margin="0 3 0 3">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1.7*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -104,11 +104,20 @@
                     <Label Content="Species" HorizontalAlignment="Center"></Label>
                     <ListBox x:Name="lstSpecies" Height="100" Margin="3" SelectionChanged="lstSpecies_SelectionChanged"></ListBox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <CheckBox x:Name="checkAllAnimals" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="checkAllAnimals" VerticalAlignment="Center" Checked="checkAllAnimals_Checked" Unchecked="checkAllAnimals_UnChecked"/>
                         <Label Content="List all the animals"/>
                     </StackPanel>
                     <Button x:Name="btnAddAnimal" Height="20" Content="Add this animal" Margin="5" Click="BtnAddAnimal_Click"/>
                 </StackPanel>
+
+                <!--Picture-->
+                <Grid Grid.Column="3" Grid.Row="0">
+                    <Border Grid.Column="3">
+                    <Image Stretch="Fill" x:Name="animalImageMainWindow" Margin="5" VerticalAlignment="Top" Height="200" Width="180"></Image>
+                    </Border>
+                    <Button x:Name="btnLoadImage" VerticalAlignment="Bottom" Margin="5 5 0 40" Height="20" Content="Load Image" Click="btnLoadImage_Click"></Button>
+                </Grid>
+
             </Grid>
         </Border>
 
@@ -118,8 +127,29 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
+
+            <Label Content="Animal Details" HorizontalAlignment="Center"/>
             <ListBox x:Name="lstAnimalDetails" Margin="5" Height="200"></ListBox>
-            <ListBox x:Name="lstAllAnimals" Grid.Column="1" Margin="5" Height="200" SelectionChanged="lstAllAnimals_SelectionChanged"/>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="List of Animals (Addidtional feature Soon to be modified or removed)" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Center"></Label>
+            </Grid>
+
+            <ListView HorizontalContentAlignment="Stretch" x:Name="lstAllAnimals" Grid.Column="1" Margin="5" Height="200" SelectionChanged="lstAllAnimals_SelectionChanged">
+                <ListView.View>
+                    <GridView >
+                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Age" Width="200" DisplayMemberBinding="{Binding Age}" />
+                        <GridViewColumn Header="Gender" Width="200" DisplayMemberBinding="{Binding Gender}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
         </Grid>
     </Grid>
 

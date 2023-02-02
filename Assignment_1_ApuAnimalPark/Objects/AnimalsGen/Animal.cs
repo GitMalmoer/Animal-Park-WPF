@@ -15,6 +15,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen
         public double Age { get; set; }
         public GenderTypes Gender { get; set; }
         public CategoryType Category { get; set; }
+        public string AnimalPicture { get; set; }
 
         public Animal()
         {

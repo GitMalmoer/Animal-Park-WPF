@@ -9,5 +9,6 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
     public enum BirdSpecies
     {
         Eagle,
+        Ostrich
     }
 }

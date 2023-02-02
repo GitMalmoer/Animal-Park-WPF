@@ -18,7 +18,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects
         public override string ToString()
         {
             string strOut = base.ToString();
-            strOut += string.Format("Venomous: {0,-25}\n", Venomous);
+            strOut += string.Format("Venomous: {0,-25}\nAnimal: {1,-25}\n", Venomous, typeof(Spider).Name);
             return strOut;
         }
     }
