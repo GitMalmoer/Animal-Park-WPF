@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assignment_1_ApuAnimalPark.Objects.AnimalsGen;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Marines
+namespace Assignment_2_ApuAnimalPark.Objects.Marines
 {
-    public class Marine : Animal
+    public abstract class Marine : Animal
     {
-        public double Weight { get; set; }
-        public string Sound { get; set; }
+        private double Weight { get;}
+        private string Sound { get;}
 
 
         public Marine(double weight, string sound)
@@ -25,5 +26,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.Marines
             strOut += string.Format("Weight: {0,-25}\nSound: {1,-25}\n", Weight, Sound);
             return strOut;
         }
+
+        public abstract override FoodSchedule GetFoodSchedule();
     }
 }

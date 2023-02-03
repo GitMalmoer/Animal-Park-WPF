@@ -1,14 +1,16 @@
-﻿using Assignment_1_ApuAnimalPark.Objects.Mammals;
+﻿using Assignment_2_ApuAnimalPark.Objects.Mammals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Birds
+namespace Assignment_2_ApuAnimalPark.Objects.Birds
 {
     public class Eagle : Bird
     {
+        private FoodSchedule foodSchedule;
         public string Color { get; set; }
         public int Flight_Speed { get; set; }
 
@@ -16,6 +18,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
         {
             Flight_Speed = flightSpeed;
             Color = color;
+            SetFoodSchedule();
         }
         public override string ToString()
         {
@@ -25,5 +28,18 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
             return strOut;
         }
 
+        private void SetFoodSchedule()
+        {
+            foodSchedule = new FoodSchedule();
+            foodSchedule.EaterType = EaterType.Omnivorous;
+            foodSchedule.Add("Morning: Grain");
+            foodSchedule.Add("Lunch: Water with meatballs");
+            foodSchedule.Add("Evening: Fried crickets with chips");
+        }
+
+        public override FoodSchedule GetFoodSchedule()
+        {
+            return foodSchedule;
+        }
     }
 }

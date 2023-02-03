@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Mammals
+namespace Assignment_2_ApuAnimalPark.Objects.Mammals
 {
     public class Cat : Mammal
     {
+        private FoodSchedule foodSchedule;
         public string Breed { get; set; }
 
         public int Cuteness { get; set; }
@@ -16,6 +18,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.Mammals
         {
             this.Breed = breed;
             this.Cuteness = cuteness;
+            SetFoodSchedule();
         }
         public override string ToString()
         {
@@ -25,5 +28,17 @@ namespace Assignment_1_ApuAnimalPark.Objects.Mammals
             return strOut;
         }
 
+        private void SetFoodSchedule()
+        {
+            foodSchedule = new FoodSchedule();
+            foodSchedule.EaterType = EaterType.Omnivorous;
+            foodSchedule.Add("Morning: cat food");
+            foodSchedule.Add("Lunch: milk with fish");
+            foodSchedule.Add("Evening: Dont feed, its enough...");
+        }
+        public override FoodSchedule GetFoodSchedule()
+        {
+            return foodSchedule;
+        }
     }
 }

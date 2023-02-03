@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Birds
+namespace Assignment_2_ApuAnimalPark.Objects.Birds
 {
     public enum BirdSpecies
     {

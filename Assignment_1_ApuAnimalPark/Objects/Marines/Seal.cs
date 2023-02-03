@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Marines
+namespace Assignment_2_ApuAnimalPark.Objects.Marines
 {
     public class Seal : Marine
     {
+        private FoodSchedule foodSchedule;
         public string Can_do_tricks { get; set; }
 
         public Seal(double weight,string sound,string canDoTricks) : base(weight,sound)
         {
             Can_do_tricks = canDoTricks;
+            SetFoodSchedule();
         }
 
         public override string ToString()
@@ -22,5 +25,18 @@ namespace Assignment_1_ApuAnimalPark.Objects.Marines
             return strOut;
         }
 
+        private void SetFoodSchedule()
+        {
+            foodSchedule = new FoodSchedule();
+            foodSchedule.EaterType = EaterType.Omnivorous;
+            foodSchedule.Add("Morning: Fish and chips");
+            foodSchedule.Add("Lunch: Fish with cavior");
+            foodSchedule.Add("Evening: Makrill med surstroming");
+        }
+
+        public override FoodSchedule GetFoodSchedule()
+        {
+            return foodSchedule;
+        }
     }
 }

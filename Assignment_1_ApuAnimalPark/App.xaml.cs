@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Assignment_1_ApuAnimalPark
+namespace Assignment_2_ApuAnimalPark
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,13 +1,14 @@
-﻿using Assignment_1_ApuAnimalPark.Objects.Marines;
+﻿using Assignment_2_ApuAnimalPark.Objects.Marines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
-namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects
+namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects
 {
-    public class Insect : Animal
+    public abstract class Insect : Animal
     {
         private int Number_Of_Legs { get; set; }
 
@@ -22,5 +23,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects
             strOut += string.Format("Legs number: {0,-25}\n", Number_Of_Legs);
             return strOut;
         }
+
+        public abstract override FoodSchedule GetFoodSchedule();
     }
 }

@@ -13,17 +13,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Assignment_1_ApuAnimalPark.Data;
-using Assignment_1_ApuAnimalPark.Objects;
-using Assignment_1_ApuAnimalPark.Objects.AnimalsGen;
-using Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects;
-using Assignment_1_ApuAnimalPark.Objects.Birds;
-using Assignment_1_ApuAnimalPark.Objects.Mammals;
-using Assignment_1_ApuAnimalPark.Objects.Marines;
+using Assignment_2_ApuAnimalPark.Data;
+using Assignment_2_ApuAnimalPark.Objects;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects;
+using Assignment_2_ApuAnimalPark.Objects.Birds;
+using Assignment_2_ApuAnimalPark.Objects.Mammals;
+using Assignment_2_ApuAnimalPark.Objects.Marines;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
 
-namespace Assignment_1_ApuAnimalPark
+namespace Assignment_2_ApuAnimalPark
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -218,7 +219,7 @@ namespace Assignment_1_ApuAnimalPark
                     case MammalSpecies:
                         SelectedMammalSpecie();
 
-                        if(checkAllAnimals.IsChecked == true) // Reinitializing specifications when checkAllAnimals is checked
+                        if (checkAllAnimals.IsChecked == true) // Reinitializing specifications when checkAllAnimals is checked
                             SelectedMammal();
                         break;
                     case BirdSpecies:
@@ -367,7 +368,7 @@ namespace Assignment_1_ApuAnimalPark
         {
             Animal animal = ReadInputs(); // this ReadInputs() method has checker inside, if inputs are wrong the value returned is null
 
-            if (animal != null) 
+            if (animal != null)
             {
                 // IF IMAGE IS INITIALIZED SAVE THE PATH TO THE PICTURE IN ANIMAL OBJECT
                 if (animalImageMainWindow.Source != null)
@@ -376,7 +377,7 @@ namespace Assignment_1_ApuAnimalPark
                 }
 
                 animal.Id = animalsManager.IdGenerator();
-                animalsManager._animals.Add(animal);
+                animalsManager.addToAnimalsList(animal);
 
                 animalImageMainWindow.Source = null; // erasing the picture from picturebox
 
@@ -627,10 +628,46 @@ namespace Assignment_1_ApuAnimalPark
         {
             // THIS METHOD UPDATES THE LISTVIEW OF ALL ANIMALS
             lstAllAnimals.Items.Clear();
-            foreach (var animal in animalsManager._animals)
+            foreach (var animal in animalsManager.GetAnimalsList())
             {
-                lstAllAnimals.Items.Add(animal); // I cant get the items in the center of columns if you have any suggestions please help.
-                
+                lstAllAnimals.Items.Add(animal); // I cant get the items to be in the center of columns if you have any suggestions please help.
+
+            }
+        }
+
+        private void UpdateListOfAnimalsSortByName()
+        {
+            lstAllAnimals.Items.Clear();
+
+            List<Animal> animals = animalsManager.GetAnimalsList();
+
+            if (animals.Count > 0)
+            {
+                animals.Sort(new NameComparer());
+
+                foreach (var animal in animals)
+                {
+                    lstAllAnimals.Items.Add(animal);
+
+                }
+            }
+        }
+
+        private void UpdateListOfAnimalsSortBySpecie()
+        {
+            lstAllAnimals.Items.Clear();
+
+            List<Animal> animals = animalsManager.GetAnimalsList();
+
+            if (animals.Count > 0)
+            {
+                animals.Sort(new SpecieComparer());
+
+                foreach (var animal in animals)
+                {
+                    lstAllAnimals.Items.Add(animal);
+
+                }
             }
         }
 
@@ -642,37 +679,17 @@ namespace Assignment_1_ApuAnimalPark
             // if index is not selected immediately end the whole method.
             if (index <= -1) return;
 
-            var selectedAnimal = animalsManager._animals[index];
+            var selectedAnimal = animalsManager.GetAnimalsList()[index];
 
-            // this kind of switch works like [if(selectedAnimal is Dog)] but its faster and less code to write.
-            //In general, the switch statement is often more readable and maintainable than multiple if statements.
-            switch (selectedAnimal)
+            if (selectedAnimal != null)
             {
-                case Dog dog:
-                    lstAnimalDetails.Items.Add(dog.ToString());
-                    break;
-                case Cat cat:
-                    lstAnimalDetails.Items.Add(cat.ToString());
-                    break;
-                case Eagle eagle:
-                    lstAnimalDetails.Items.Add(eagle.ToString());
-                    break;
-                case Seal seal:
-                    lstAnimalDetails.Items.Add(seal.ToString());
-                    break;
-                case Dolphin dolphin:
-                    lstAnimalDetails.Items.Add(dolphin.ToString());
-                    break;
-                case LadyBug ladyBug:
-                    lstAnimalDetails.Items.Add(ladyBug.ToString());
-                    break;
-                case Spider spider:
-                    lstAnimalDetails.Items.Add(spider.ToString());
-                    break;
-                case Ostrich ostrich:
-                    lstAnimalDetails.Items.Add(ostrich.ToString());
-                    break;
+                lstFoodSchedule.Items.Clear();
+                FoodSchedule foodSchedule = selectedAnimal.GetFoodSchedule();
+                lblEaterType.Content = foodSchedule.EaterType;
+                lstFoodSchedule.Items.Add(foodSchedule.GetFoodListString());
             }
+
+            lstAnimalDetails.Items.Add(selectedAnimal.ToString());
         }
 
         private void checkAllAnimals_Checked(object sender, RoutedEventArgs e)
@@ -692,6 +709,7 @@ namespace Assignment_1_ApuAnimalPark
             lstSpecies.ItemsSource = combined;
         }
 
+
         private void checkAllAnimals_UnChecked(object sender, RoutedEventArgs e)
         {
             lstCategory.IsEnabled = true;
@@ -705,7 +723,7 @@ namespace Assignment_1_ApuAnimalPark
             Array mammals = Enum.GetValues(typeof(MammalSpecies));
             Array marines = Enum.GetValues(typeof(MarineSpecies));
 
-            if(birds.Cast<object>().Contains(specie))
+            if (birds.Cast<object>().Contains(specie))
             {
                 return CategoryType.Bird;
             }
@@ -728,7 +746,7 @@ namespace Assignment_1_ApuAnimalPark
             {
                 MessageBox.Show("This animal specie does not belong to any category");
                 return null;
-                
+
             }
         }
 
@@ -761,6 +779,16 @@ namespace Assignment_1_ApuAnimalPark
             }
 
             return image;
+        }
+
+        private void btnSortName_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateListOfAnimalsSortByName();
+        }
+
+        private void btnSortSpecie_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateListOfAnimalsSortBySpecie();
         }
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assignment_1_ApuAnimalPark.Objects.AnimalsGen.Insects;
-using Assignment_1_ApuAnimalPark.Objects.Mammals;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects;
+using Assignment_2_ApuAnimalPark.Objects.Mammals;
 
-namespace Assignment_1_ApuAnimalPark.Data
+namespace Assignment_2_ApuAnimalPark.Data
 {
     public enum AllAnimalsEnum
     {

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assignment_1_ApuAnimalPark.Objects.AnimalsGen;
-using Assignment_1_ApuAnimalPark.Objects.Mammals;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
+using Assignment_2_ApuAnimalPark.Objects.Mammals;
 
-namespace Assignment_1_ApuAnimalPark.Objects.Birds
+namespace Assignment_2_ApuAnimalPark.Objects.Birds
 {
-    public class Bird : Animal
+    public abstract class Bird : Animal
     {
         private int Wings_Spread { get; set; }
         private double Beak_Length { get; set; }
@@ -26,5 +27,7 @@ namespace Assignment_1_ApuAnimalPark.Objects.Birds
 
             return strOut;
         }
+
+        public abstract override FoodSchedule GetFoodSchedule();
     }
 }
