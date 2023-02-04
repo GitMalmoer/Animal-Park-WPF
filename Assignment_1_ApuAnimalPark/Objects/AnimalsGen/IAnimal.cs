@@ -15,6 +15,5 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
 
         FoodSchedule GetFoodSchedule();
 
-        string GetExtraInfo();
     }
 }

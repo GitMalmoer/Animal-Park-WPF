@@ -11,14 +11,26 @@ namespace Assignment_2_ApuAnimalPark.Objects
     {
         private List<Animal> _animals;
 
+        public int AnimalsListCount
+        {
+            get { return _animals.Count; }
+        }
+
         public AnimalsManager()
         {
             _animals = new List<Animal>();
         }
 
-        public List<Animal> GetAnimalsList()
+        public Animal GetAnimalAt(int index)
         {
-            return _animals;
+            if (index >= 0)
+            {
+                return _animals[index];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void addToAnimalsList(Animal animal)
@@ -32,6 +44,12 @@ namespace Assignment_2_ApuAnimalPark.Objects
         public int IdGenerator()
         {
             return _animals.Count + 1;
+        }
+
+        public List<Animal> SortListByName()
+        {
+            _animals.Sort(new NameComparer());
+            return _animals;
         }
 
     }

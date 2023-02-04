@@ -38,18 +38,13 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
             Id = id;
         }
 
-        public override string ToString()
+        public override string ToString() // this works as getextrainfo method
         {
             string strOut = string.Format("ID: {0,-25}\nName: {1,-25}\nAge: {2,-25}\nGender: {3,-25}\nCategory: {4,-25}\n", Id, Name, Age.ToString(), Gender.ToString(), Category.ToString());
             return strOut;
         }
 
         public abstract FoodSchedule GetFoodSchedule();
-
-        public string GetExtraInfo()
-        {
-            throw new NotImplementedException();
-        }
 
         public int CompareTo(Animal? other)
         {

@@ -53,6 +53,8 @@ namespace Assignment_2_ApuAnimalPark
             lstCategory.SelectedItem = CategoryType.Mammal;
             // SETTING UP THE DEFAULT SPECIE IN GUI AT THE PROGRAM START
             lstSpecies.SelectedItem = MammalSpecies.Dog;
+            // String empty of Eater type
+            lblEaterType.Content = string.Empty;
 
         }
 
@@ -256,8 +258,8 @@ namespace Assignment_2_ApuAnimalPark
                     InitializeCutenessComboBoxData();
                     Cat cat;
                     grpSpecies.Header = "Cat Specification";
-                    lblSpecies1.Content = nameof(cat.Breed);
-                    lblComboSpecies.Content = nameof(cat.Cuteness);
+                    lblSpecies1.Content = "Breed: ";
+                    lblComboSpecies.Content = "Cuteness: ";
 
                     lblSpecies1.Visibility = Visibility.Visible;
                     txtSpecies1.Visibility = Visibility.Visible;
@@ -285,8 +287,8 @@ namespace Assignment_2_ApuAnimalPark
                 case BirdSpecies.Eagle:
                     Eagle eagle;
                     grpSpecies.Header = "Eagle Specification";
-                    lblSpecies1.Content = nameof(eagle.Flight_Speed).Replace("_", " ");
-                    lblSpecies2.Content = nameof(eagle.Color);
+                    lblSpecies1.Content = "Flight Speed: ";
+                    lblSpecies2.Content = "Color: ";
 
                     lblSpecies1.Visibility = Visibility.Visible;
                     txtSpecies1.Visibility = Visibility.Visible;
@@ -321,7 +323,7 @@ namespace Assignment_2_ApuAnimalPark
                     InitializeYesNoComboBoxData();
                     Seal seal;
                     grpSpecies.Header = "Seal Specification";
-                    lblSpecies2.Content = nameof(seal.Can_do_tricks).Replace("_", " ");
+                    lblSpecies2.Content = "Can do tricks?";
 
                     cmbSpecies.Visibility = Visibility.Visible;
                     lblSpecies2.Visibility = Visibility.Visible;
@@ -334,7 +336,6 @@ namespace Assignment_2_ApuAnimalPark
                     cmbSpecies.Visibility = Visibility.Visible;
                     lblSpecies2.Visibility = Visibility.Visible;
                     break;
-
             }
         }
 
@@ -382,7 +383,6 @@ namespace Assignment_2_ApuAnimalPark
                 animalImageMainWindow.Source = null; // erasing the picture from picturebox
 
                 UpdateListOfAnimals();
-
             }
         }
 
@@ -390,9 +390,9 @@ namespace Assignment_2_ApuAnimalPark
         {
             Animal animal = null;
 
-            string selectedSpecie = lstSpecies.SelectedItem.ToString();
+            var selectedSpecie = lstSpecies.SelectedItem;
 
-            if (selectedSpecie == MammalSpecies.Dog.ToString())
+            if (MammalSpecies.Dog.Equals(selectedSpecie))
             {
                 // Mammal specifications
                 int numOfTeeth = 0; // this is label: txtSpecs1.Text
@@ -414,7 +414,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == MammalSpecies.Cat.ToString())
+            if (MammalSpecies.Cat.Equals(selectedSpecie))
             {
                 // Mammal specifications
                 int numOfTeeth = 0; // this is label: txtSpecs1.Text
@@ -437,7 +437,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == BirdSpecies.Eagle.ToString())
+            if (BirdSpecies.Eagle.Equals(selectedSpecie))
             {
                 // Bird specification
                 int wingsSpread = 0; // specs1
@@ -467,7 +467,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == BirdSpecies.Ostrich.ToString())
+            if (BirdSpecies.Ostrich.Equals(selectedSpecie))
             {
                 // Bird specification
                 int wingsSpread = 0; // specs1
@@ -497,7 +497,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == MarineSpecies.Seal.ToString())
+            if (MarineSpecies.Seal.Equals(selectedSpecie))
             {
                 // Marine specifications
                 double weight = 0;
@@ -518,7 +518,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == MarineSpecies.Dolphin.ToString())
+            if (MarineSpecies.Dolphin.Equals(selectedSpecie))
             {
                 // Marine specifications
                 double weight = 0;
@@ -539,7 +539,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == InsectSpecies.LadyBug.ToString())
+            if (InsectSpecies.LadyBug.Equals(selectedSpecie))
             {
                 // Insect specifications
                 int numberOfLegs = 0;
@@ -563,7 +563,7 @@ namespace Assignment_2_ApuAnimalPark
                 }
             }
 
-            if (selectedSpecie == InsectSpecies.Spider.ToString())
+            if (InsectSpecies.Spider.Equals(selectedSpecie))
             {
                 // Insect specifications
                 int numberOfLegs = 0;
@@ -582,7 +582,6 @@ namespace Assignment_2_ApuAnimalPark
                     ReadCommonValues(ref animal);
                 }
             }
-
 
             return animal;
         }
@@ -620,66 +619,73 @@ namespace Assignment_2_ApuAnimalPark
                 animal.Category = (CategoryType)lstCategory.SelectedItem;
             }
 
-
             return animal;
         }
 
         private void UpdateListOfAnimals()
         {
             // THIS METHOD UPDATES THE LISTVIEW OF ALL ANIMALS
+            lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
-            foreach (var animal in animalsManager.GetAnimalsList())
-            {
-                lstAllAnimals.Items.Add(animal); // I cant get the items to be in the center of columns if you have any suggestions please help.
 
-            }
+            List<Animal> animals = GetListOfAnimalsFromManager();
+
+            lstAllAnimals.ItemsSource = animals;
         }
 
         private void UpdateListOfAnimalsSortByName()
         {
+            lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
 
-            List<Animal> animals = animalsManager.GetAnimalsList();
+            List<Animal> animals = GetListOfAnimalsFromManager();
 
             if (animals.Count > 0)
             {
                 animals.Sort(new NameComparer());
-
-                foreach (var animal in animals)
-                {
-                    lstAllAnimals.Items.Add(animal);
-
-                }
+                lstAllAnimals.ItemsSource = animals;
             }
         }
 
         private void UpdateListOfAnimalsSortBySpecie()
         {
+            lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
 
-            List<Animal> animals = animalsManager.GetAnimalsList();
+            List<Animal> animals = GetListOfAnimalsFromManager();
 
             if (animals.Count > 0)
             {
                 animals.Sort(new SpecieComparer());
+                lstAllAnimals.ItemsSource = animals;
+            }
+        }
 
-                foreach (var animal in animals)
+        private List<Animal> GetListOfAnimalsFromManager()
+        {
+            List<Animal> animals = new List<Animal>();
+
+            for (int i = 0; i < animalsManager.AnimalsListCount; i++)
+            {
+                Animal animal = animalsManager.GetAnimalAt(i);
+                if (animal != null)
                 {
-                    lstAllAnimals.Items.Add(animal);
-
+                    animals.Add(animal);
                 }
             }
+
+            return animals;
         }
 
         private void lstAllAnimals_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lstAnimalDetails.Items.Clear();
-            int index = lstAllAnimals.SelectedIndex;
+            Animal index = (Animal)lstAllAnimals.SelectedItem;
 
-            // if index is not selected immediately end the whole method.
-            if (index <= -1) return;
+            // if index is null immediately end the whole method.
+            if (index == null) return;
 
-            var selectedAnimal = animalsManager.GetAnimalsList()[index];
+            Animal selectedAnimal = index;
 
             if (selectedAnimal != null)
             {
@@ -746,7 +752,6 @@ namespace Assignment_2_ApuAnimalPark
             {
                 MessageBox.Show("This animal specie does not belong to any category");
                 return null;
-
             }
         }
 
