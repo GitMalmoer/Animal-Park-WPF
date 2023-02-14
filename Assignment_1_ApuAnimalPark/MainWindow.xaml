@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_2_ApuAnimalPark"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="650" Width="1200">
 
 
     <Grid x:Name="MainGrid" Margin="5">
@@ -13,14 +13,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Border BorderThickness="1" BorderBrush="Black">
+
             <Grid Background="#FFE8E4E4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.15*"/>
+                </Grid.RowDefinitions>
 
                 <StackPanel Margin="5">
                     <Label Content="Basic Information" HorizontalAlignment="Center"></Label>
@@ -107,7 +115,6 @@
                         <CheckBox x:Name="checkAllAnimals" VerticalAlignment="Center" Checked="checkAllAnimals_Checked" Unchecked="checkAllAnimals_UnChecked"/>
                         <Label Content="List all the animals"/>
                     </StackPanel>
-                    <Button x:Name="btnAddAnimal" Height="20" Content="Add this animal" Margin="5" Click="BtnAddAnimal_Click"/>
                 </StackPanel>
 
                 <!--Picture-->
@@ -117,6 +124,17 @@
                     </Border>
                     <Button x:Name="btnLoadImage" VerticalAlignment="Bottom" Margin="5 5 0 40" Height="20" Content="Load Image" Click="btnLoadImage_Click"></Button>
                 </Grid>
+
+                <!--Food items-->
+                <Grid Grid.Column="4">
+                    <ListView x:Name="lstFoodItems" Height="200" Margin="5">
+
+                    </ListView>
+                    <Button x:Name="btnFoodItems" Content="Food Items" Height="20" Width="90" VerticalAlignment="Bottom" Margin="0 0 0 8" Click="btnFoodItems_Click"></Button>
+                </Grid>
+
+                <Button Grid.Row="1" Grid.Column="2" x:Name="btnAddAnimal" Height="20" Content="Add this animal" Margin="0 0 0 15" Click="BtnAddAnimal_Click"/>
+
 
             </Grid>
         </Border>

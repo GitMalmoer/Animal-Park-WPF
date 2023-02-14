@@ -14,11 +14,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Assignment_2_ApuAnimalPark.Data;
+using Assignment_2_ApuAnimalPark.FoodItemsWindow;
 using Assignment_2_ApuAnimalPark.Objects;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects;
 using Assignment_2_ApuAnimalPark.Objects.Birds;
+using Assignment_2_ApuAnimalPark.Objects.Food;
 using Assignment_2_ApuAnimalPark.Objects.Mammals;
 using Assignment_2_ApuAnimalPark.Objects.Marines;
 using Microsoft.VisualBasic;
@@ -32,16 +34,20 @@ namespace Assignment_2_ApuAnimalPark
     public partial class MainWindow : Window
     {
         private AnimalsManager animalsManager = new AnimalsManager();
+        private FoodManager foodManager = new FoodManager();
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeGUI();
+            
         }
 
         private void InitializeGUI()
         {
             this.Title = "Apu Animal Park by Marcin Junka";
+            this.ResizeMode = ResizeMode.CanMinimize;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             // BY DEFAULT VISIBILITY OF INPUT FIELDS IS HIDDEN
             HideAllInputsSpecification();
             HideAllInputsSpecies();
@@ -371,14 +377,19 @@ namespace Assignment_2_ApuAnimalPark
 
             if (animal != null)
             {
-                // IF IMAGE IS INITIALIZED SAVE THE PATH TO THE PICTURE IN ANIMAL OBJECT
-                if (animalImageMainWindow.Source != null)
-                {
+                if (animalImageMainWindow.Source != null) // if image is initialized save the image into animal.AnimalPicture
                     animal.AnimalPicture = animalImageMainWindow.Source.ToString();
-                }
 
-                animal.Id = animalsManager.IdGenerator();
-                animalsManager.addToAnimalsList(animal);
+
+                if (lstFoodItems.SelectedIndex > -1) // If user selected FoodItem then it will be saved in Animal
+                    animal.FoodItem = (FoodItem)lstFoodItems.SelectedItem;
+
+                animal.Id = animalsManager.IdGenerator(); // Generating unique id for animal
+
+                animalsManager.addToAnimalsList(animal); 
+
+                if(animal.Id > 0 && animal.FoodItem != null) // adding item to dictionary
+                    animalsManager.AnimalFoodItemDictionary.Add(animal.Id,animal.FoodItem);
 
                 animalImageMainWindow.Source = null; // erasing the picture from picturebox
 
@@ -582,7 +593,6 @@ namespace Assignment_2_ApuAnimalPark
                     ReadCommonValues(ref animal);
                 }
             }
-
             return animal;
         }
 
@@ -628,7 +638,7 @@ namespace Assignment_2_ApuAnimalPark
             lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
 
-            List<Animal> animals = GetListOfAnimalsFromManager();
+            List<Animal> animals = GetListOfAnimalsFromManager(); // method which fills up the list with for loop and GetAnimalAt(i) method 
 
             lstAllAnimals.ItemsSource = animals;
         }
@@ -638,13 +648,12 @@ namespace Assignment_2_ApuAnimalPark
             lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
 
-            List<Animal> animals = GetListOfAnimalsFromManager();
+            animalsManager.SortListByComparer(new NameComparer()); // sorting the list in animals manager
 
-            if (animals.Count > 0)
-            {
-                animals.Sort(new NameComparer());
-                lstAllAnimals.ItemsSource = animals;
-            }
+            List<Animal> animals = GetListOfAnimalsFromManager(); // method which fills up the list with for loop and GetAnimalAt(i) method 
+
+            lstAllAnimals.ItemsSource = animals;
+            
         }
 
         private void UpdateListOfAnimalsSortBySpecie()
@@ -652,16 +661,14 @@ namespace Assignment_2_ApuAnimalPark
             lstAllAnimals.ItemsSource = null;
             lstAllAnimals.Items.Clear();
 
-            List<Animal> animals = GetListOfAnimalsFromManager();
+            animalsManager.SortListByComparer(new SpecieComparer()); // sorting the list in animals manager
 
-            if (animals.Count > 0)
-            {
-                animals.Sort(new SpecieComparer());
-                lstAllAnimals.ItemsSource = animals;
-            }
+            List<Animal> animals = GetListOfAnimalsFromManager(); // method which fills up the list with for loop and GetAnimalAt(i) method 
+
+            lstAllAnimals.ItemsSource = animals;
         }
 
-        private List<Animal> GetListOfAnimalsFromManager()
+        private List<Animal> GetListOfAnimalsFromManager() // NOT RETURNING LIST GETTING ANIMALS BY .GetAnimalAt(i)
         {
             List<Animal> animals = new List<Animal>();
 
@@ -673,7 +680,6 @@ namespace Assignment_2_ApuAnimalPark
                     animals.Add(animal);
                 }
             }
-
             return animals;
         }
 
@@ -692,10 +698,15 @@ namespace Assignment_2_ApuAnimalPark
                 lstFoodSchedule.Items.Clear();
                 FoodSchedule foodSchedule = selectedAnimal.GetFoodSchedule();
                 lblEaterType.Content = foodSchedule.EaterType;
-                lstFoodSchedule.Items.Add(foodSchedule.GetFoodListString());
+
+                //lstFoodSchedule.Items.Add(foodSchedule.GetFoodListString());
             }
 
             lstAnimalDetails.Items.Add(selectedAnimal.ToString());
+        }
+        private void UpdateFoodScheduleList()
+        {
+
         }
 
         private void checkAllAnimals_Checked(object sender, RoutedEventArgs e)
@@ -714,7 +725,6 @@ namespace Assignment_2_ApuAnimalPark
 
             lstSpecies.ItemsSource = combined;
         }
-
 
         private void checkAllAnimals_UnChecked(object sender, RoutedEventArgs e)
         {
@@ -794,6 +804,33 @@ namespace Assignment_2_ApuAnimalPark
         private void btnSortSpecie_Click(object sender, RoutedEventArgs e)
         {
             UpdateListOfAnimalsSortBySpecie();
+        }
+
+        private void btnFoodItems_Click(object sender, RoutedEventArgs e)
+        {
+            FoodItems foodItemsWindow = new FoodItems();
+
+            var foodItems = foodItemsWindow.ShowDialog();
+
+            if (foodItemsWindow.DialogResult == true)
+            {
+                FoodItem foodItem = foodItemsWindow.FoodItem; 
+                foodManager.Add(foodItem); // adding foodItem from window to manager
+
+                UpdateFoodItemsList();
+            }
+        }
+
+        private void UpdateFoodItemsList()
+        {
+            lstFoodItems.Items.Clear();
+
+            for (int i = 0; i < foodManager.Count; i++)
+            {
+                //The default behavior of the ListBox control is to call the ToString() method on each object in the Items collection and display the resulting string in the list.
+                lstFoodItems.Items.Add(foodManager.GetAt(i)); // tostring method is not needed!
+            }
+
         }
     }
 }

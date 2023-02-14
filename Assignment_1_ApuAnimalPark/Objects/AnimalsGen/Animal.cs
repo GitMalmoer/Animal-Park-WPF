@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Assignment_2_ApuAnimalPark.Objects.Food;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
 {
@@ -18,11 +19,13 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
         public CategoryType Category { get; set; }
         public string AnimalPicture { get; set; }
 
+        public FoodItem FoodItem { get; set; } 
+
         public Animal()
         {
             Reset();
         }
-
+        
         private void Reset()
         {
             Gender = GenderTypes.Unknown;
