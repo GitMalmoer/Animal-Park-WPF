@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_2_ApuAnimalPark.Objects.Food;
+using Assignment_2_ApuAnimalPark.Objects.ListManager;
 
 namespace Assignment_2_ApuAnimalPark.Objects
 {
-    public class AnimalsManager
+    public class AnimalsManager : ListManager<Animal>
     {
         private List<Animal> _animals;
 
@@ -62,16 +63,8 @@ namespace Assignment_2_ApuAnimalPark.Objects
 
         public FoodItem GetValueFromFoodItemsDictionary(int animalId)
         {
-            FoodItem foodItem = null;
-            try
-            {
-                FoodItem FoodItem = (FoodItem)AnimalFoodItemDictionary.First(x => x.Key == animalId).Value;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Error: " + e);
-            }
-            return foodItem;
+            var result = AnimalFoodItemDictionary.GetValueOrDefault(animalId, null);
+            return result;
         }
 
 

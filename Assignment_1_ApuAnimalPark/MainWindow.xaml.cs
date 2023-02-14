@@ -375,7 +375,8 @@ namespace Assignment_2_ApuAnimalPark
         {
             Animal animal = ReadInputs(); // this ReadInputs() method has checker inside, if inputs are wrong the value returned is null
 
-            if (animal != null)
+
+            if (animal != null && CheckIfFoodItemSelected())
             {
                 if (animalImageMainWindow.Source != null) // if image is initialized save the image into animal.AnimalPicture
                     animal.AnimalPicture = animalImageMainWindow.Source.ToString();
@@ -395,6 +396,30 @@ namespace Assignment_2_ApuAnimalPark
 
                 UpdateListOfAnimals();
             }
+        }
+
+        private bool CheckIfFoodItemSelected()
+        {
+            bool proceed = false;
+
+            if (lstFoodItems.SelectedIndex > -1)
+            {
+                proceed = true;
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("The food item was not selected.\nAre you sure you want to proceed?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    proceed = true;
+                }
+                else
+                {
+                    proceed = false;
+                }
+            }
+            return proceed;
         }
 
         private Animal ReadInputs()
@@ -695,18 +720,22 @@ namespace Assignment_2_ApuAnimalPark
 
             if (selectedAnimal != null)
             {
-                lstFoodSchedule.Items.Clear();
-                FoodSchedule foodSchedule = selectedAnimal.GetFoodSchedule();
-                lblEaterType.Content = foodSchedule.EaterType;
+                var eaterType = selectedAnimal.GetFoodSchedule().EaterType;
+                lblEaterType.Content = eaterType; // setting up eater type
 
-                //lstFoodSchedule.Items.Add(foodSchedule.GetFoodListString());
+                UpdateFoodScheduleList(selectedAnimal);
             }
 
             lstAnimalDetails.Items.Add(selectedAnimal.ToString());
         }
-        private void UpdateFoodScheduleList()
-        {
 
+
+        private void UpdateFoodScheduleList(Animal selectedAnimal)
+        {
+            lstFoodSchedule.Items.Clear();
+            FoodItem fItem = animalsManager.GetValueFromFoodItemsDictionary(selectedAnimal.Id);
+
+            lstFoodSchedule.Items.Add(fItem);
         }
 
         private void checkAllAnimals_Checked(object sender, RoutedEventArgs e)
