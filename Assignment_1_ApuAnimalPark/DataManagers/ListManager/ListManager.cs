@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using Newtonsoft.Json;
 
 namespace Assignment_2_ApuAnimalPark.Objects.ListManager
 {
     public class ListManager<T> : IListManager<T>
     {
+        [JsonRequired]
         private List<T> _list;
 
         public ListManager()
@@ -17,6 +19,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.ListManager
             _list = new List<T>();
         }
 
+        [JsonIgnore]
         public int Count => _list.Count;
 
         public bool Add(T type)
@@ -103,6 +106,12 @@ namespace Assignment_2_ApuAnimalPark.Objects.ListManager
                 stringList.Add(item.ToString());
             }
             return stringList;
+        }
+
+        public void SortListByComparer(IComparer<T> sorter)
+        {
+            if (_list.Count > 1)
+                _list.Sort(sorter);
         }
     }
 }

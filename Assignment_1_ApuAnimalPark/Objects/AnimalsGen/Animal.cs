@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Assignment_2_ApuAnimalPark.Objects.Food;
+using Newtonsoft.Json;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
 {
@@ -18,7 +19,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
         public GenderTypes Gender { get; set; }
         public CategoryType Category { get; set; }
         public string AnimalPicture { get; set; }
-
+        [JsonIgnore]
         public FoodItem FoodItem { get; set; } 
 
         public Animal()

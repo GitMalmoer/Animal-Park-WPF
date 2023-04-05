@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ApuAnimalPark.DataManagers;
 using Assignment_2_ApuAnimalPark.Data;
 using Assignment_2_ApuAnimalPark.FoodItemsWindow;
 using Assignment_2_ApuAnimalPark.Objects;
@@ -387,7 +388,7 @@ namespace Assignment_2_ApuAnimalPark
 
                 animal.Id = animalsManager.IdGenerator(); // Generating unique id for animal
 
-                animalsManager.addToAnimalsList(animal); 
+                animalsManager.Add(animal); 
 
                 if(animal.Id > 0 && animal.FoodItem != null) // adding item to dictionary
                     animalsManager.AnimalFoodItemDictionary.Add(animal.Id,animal.FoodItem);
@@ -697,9 +698,9 @@ namespace Assignment_2_ApuAnimalPark
         {
             List<Animal> animals = new List<Animal>();
 
-            for (int i = 0; i < animalsManager.AnimalsListCount; i++)
+            for (int i = 0; i < animalsManager.Count; i++)
             {
-                Animal animal = animalsManager.GetAnimalAt(i);
+                Animal animal = animalsManager.GetAt(i);
                 if (animal != null)
                 {
                     animals.Add(animal);
@@ -859,6 +860,40 @@ namespace Assignment_2_ApuAnimalPark
                 //The default behavior of the ListBox control is to call the ToString() method on each object in the Items collection and display the resulting string in the list.
                 lstFoodItems.Items.Add(foodManager.GetAt(i)); // tostring method is not needed!
             }
+
+        }
+
+        private void MenuSaveAs_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileManager fileManager = new FileManager();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "(.txt)|.txt|JSON|.json";
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                var path = saveFileDialog.FileName;
+                fileManager.saveFileAs(animalsManager, foodManager,path);
+            }
+        }
+
+        private void MenuOpen_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileManager fileManager = new FileManager();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "(.txt)|.*txt|JSON|.json|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            var dialogResult = openFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                var path = openFileDialog.FileName;
+                fileManager.openFile(path);
+            }
+
 
         }
     }
