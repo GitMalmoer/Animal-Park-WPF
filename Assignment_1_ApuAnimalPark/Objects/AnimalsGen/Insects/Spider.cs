@@ -7,6 +7,7 @@ using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects
 {
+    [Serializable]
     public class Spider : Insect
     {
         private FoodSchedule foodSchedule;

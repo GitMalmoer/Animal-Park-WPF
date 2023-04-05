@@ -9,6 +9,7 @@ using Assignment_2_ApuAnimalPark.Objects.Mammals;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Birds
 {
+    [Serializable]
     public abstract class Bird : Animal
     {
         private int Wings_Spread { get; set; }

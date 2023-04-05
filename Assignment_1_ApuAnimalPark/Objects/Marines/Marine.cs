@@ -8,6 +8,7 @@ using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Marines
 {
+    [Serializable]
     public abstract class Marine : Animal
     {
         private double Weight { get;}

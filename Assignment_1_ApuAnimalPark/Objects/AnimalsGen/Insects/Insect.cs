@@ -8,6 +8,7 @@ using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects
 {
+    [Serializable]
     public abstract class Insect : Animal
     {
         private int Number_Of_Legs { get; set; }

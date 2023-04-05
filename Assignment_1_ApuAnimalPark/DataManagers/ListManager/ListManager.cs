@@ -9,10 +9,11 @@ using Newtonsoft.Json;
 
 namespace Assignment_2_ApuAnimalPark.Objects.ListManager
 {
+    [Serializable]
     public class ListManager<T> : IListManager<T>
     {
         [JsonRequired]
-        private List<T> _list;
+        private protected List<T> _list;
 
         public ListManager()
         {

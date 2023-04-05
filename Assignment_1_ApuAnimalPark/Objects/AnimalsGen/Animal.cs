@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
 {
+    [Serializable]
     public abstract class Animal : IAnimal, IComparable<Animal>
     {
         // WHEN YOU ADD NEW ANIMAL SPECIE REMEMBER TO ADD IT INTO <ANIMAL_NAME>SPECIES ENUM!

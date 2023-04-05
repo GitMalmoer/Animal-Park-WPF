@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder
 {
+    [Serializable]
     public class FoodSchedule
     {
 

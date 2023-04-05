@@ -12,8 +12,12 @@
                 <MenuItem Header="New"/>
                 <MenuItem Header="Open" x:Name="menuOpen" Click="MenuOpen_OnClick"/>
                 <MenuItem Header="Save"/>
-                <MenuItem x:Name="menuSaveAs" Header="Save As" Click="MenuSaveAs_OnClick"  />
-                <Separator/>
+                <MenuItem Header="Save As">
+                    <MenuItem x:Name="menuSaveAsJson" Header="JSON" Click="MenuSaveAsJSON_OnClick"></MenuItem>
+                    <MenuItem x:Name="menuSaveAsBinary" Header="Binary" Click="MenuSaveAsBinary_OnClick"></MenuItem>
+                    <MenuItem x:Name="menuSaveAsXML" Header="XML" Click="MenuSaveAsXML_OnClick"></MenuItem>
+                </MenuItem>
+                    <Separator/>
                 <MenuItem Header="XML">
                     <MenuItem Header="test"/>
                 </MenuItem>

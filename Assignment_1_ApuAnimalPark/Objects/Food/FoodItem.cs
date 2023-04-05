@@ -7,6 +7,7 @@ using Assignment_2_ApuAnimalPark.Objects.ListManager;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Food
 {
+    [Serializable]
     public class FoodItem
     {
         public ListManager<string> Ingredients { get; }

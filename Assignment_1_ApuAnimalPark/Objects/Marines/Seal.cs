@@ -7,6 +7,7 @@ using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Marines
 {
+    [Serializable]
     public class Seal : Marine
     {
         private FoodSchedule foodSchedule;

@@ -8,6 +8,7 @@ using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Mammals
 {
+    [Serializable]
     public class Dog : Mammal
     {
         private FoodSchedule foodSchedule;

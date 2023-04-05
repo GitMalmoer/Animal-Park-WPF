@@ -10,6 +10,7 @@ using Assignment_2_ApuAnimalPark.Objects.ListManager;
 
 namespace Assignment_2_ApuAnimalPark.Objects
 {
+    [Serializable]
     public class AnimalsManager : ListManager<Animal>
     {
         public Dictionary<int, FoodItem> AnimalFoodItemDictionary { get; set; }
@@ -26,6 +27,14 @@ namespace Assignment_2_ApuAnimalPark.Objects
         {
             AnimalsCounter += 1;
             return AnimalsCounter;
+        }
+
+        public void setAnimalList(List<Animal> animalList)
+        {
+            if (animalList.Count > 0)
+            {
+                _list = animalList;
+            }
         }
 
         public FoodItem GetValueFromFoodItemsDictionary(int animalId)

@@ -26,6 +26,7 @@ using Assignment_2_ApuAnimalPark.Objects.Mammals;
 using Assignment_2_ApuAnimalPark.Objects.Marines;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
+using Path = System.IO.Path;
 
 namespace Assignment_2_ApuAnimalPark
 {
@@ -863,7 +864,7 @@ namespace Assignment_2_ApuAnimalPark
 
         }
 
-        private void MenuSaveAs_OnClick(object sender, RoutedEventArgs e)
+        private void MenuSaveAsJSON_OnClick(object sender, RoutedEventArgs e)
         {
             FileManager fileManager = new FileManager();
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -875,7 +876,7 @@ namespace Assignment_2_ApuAnimalPark
             if (dialogResult == true)
             {
                 var path = saveFileDialog.FileName;
-                fileManager.saveFileAs(animalsManager, foodManager,path);
+                fileManager.saveFileAsJSON(animalsManager, foodManager,path);
             }
         }
 
@@ -891,10 +892,34 @@ namespace Assignment_2_ApuAnimalPark
             if (dialogResult == true)
             {
                 var path = openFileDialog.FileName;
-                fileManager.openFile(path);
+                var extension = Path.GetExtension(path);
+                fileManager.openFile(path,extension,ref animalsManager, ref foodManager);
+                UpdateListOfAnimals();
+                UpdateFoodItemsList();
             }
 
 
+        }
+
+        private void MenuSaveAsBinary_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileManager fileManager = new FileManager();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "(.bin)|.bin";
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                var path = saveFileDialog.FileName;
+                fileManager.SerializeBinary(animalsManager, foodManager, path);
+            }
+        }
+
+        private void MenuSaveAsXML_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
