@@ -15,6 +15,11 @@ namespace Assignment_2_ApuAnimalPark.Objects.Mammals
 
         public int Cuteness { get; set; }
 
+        public Cat()
+        {
+            Breed = String.Empty;
+            Cuteness = 1;
+        }
         public Cat(int numOfTeeth,int tailLength, string breed, int cuteness) : base(numOfTeeth,tailLength)
         {
             this.Breed = breed;

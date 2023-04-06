@@ -9,7 +9,7 @@
     <StackPanel>
         <Menu VerticalAlignment="Top" Height="20">
             <MenuItem Header="File">
-                <MenuItem Header="New"/>
+                <MenuItem Header="New" x:Name="menuNew" Click="MenuNew_OnClick" />
                 <MenuItem Header="Open" x:Name="menuOpen" Click="MenuOpen_OnClick"/>
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Save As">

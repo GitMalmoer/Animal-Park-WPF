@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects
 {
     [Serializable]
+    [XmlInclude(typeof(LadyBug))]
     public class LadyBug : Insect
     {
         private FoodSchedule foodSchedule;
         public int Number_Of_Dots { get; set; }
+
+        public LadyBug()
+        {
+            Number_Of_Dots = 0;
+        }
 
         public LadyBug(int numberOfDots,int numberOfLegs ):base(numberOfLegs)
         {

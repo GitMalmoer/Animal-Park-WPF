@@ -42,7 +42,7 @@ namespace Assignment_2_ApuAnimalPark
         {
             InitializeComponent();
             InitializeGUI();
-            
+
         }
 
         private void InitializeGUI()
@@ -389,10 +389,10 @@ namespace Assignment_2_ApuAnimalPark
 
                 animal.Id = animalsManager.IdGenerator(); // Generating unique id for animal
 
-                animalsManager.Add(animal); 
+                animalsManager.Add(animal);
 
-                if(animal.Id > 0 && animal.FoodItem != null) // adding item to dictionary
-                    animalsManager.AnimalFoodItemDictionary.Add(animal.Id,animal.FoodItem);
+                if (animal.Id > 0 && animal.FoodItem != null) // adding item to dictionary
+                    animalsManager.AnimalFoodItemDictionary.Add(animal.Id, animal.FoodItem);
 
                 animalImageMainWindow.Source = null; // erasing the picture from picturebox
 
@@ -680,7 +680,7 @@ namespace Assignment_2_ApuAnimalPark
             List<Animal> animals = GetListOfAnimalsFromManager(); // method which fills up the list with for loop and GetAnimalAt(i) method 
 
             lstAllAnimals.ItemsSource = animals;
-            
+
         }
 
         private void UpdateListOfAnimalsSortBySpecie()
@@ -845,7 +845,7 @@ namespace Assignment_2_ApuAnimalPark
 
             if (foodItemsWindow.DialogResult == true)
             {
-                FoodItem foodItem = foodItemsWindow.FoodItem; 
+                FoodItem foodItem = foodItemsWindow.FoodItem;
                 foodManager.Add(foodItem); // adding foodItem from window to manager
 
                 UpdateFoodItemsList();
@@ -864,6 +864,25 @@ namespace Assignment_2_ApuAnimalPark
 
         }
 
+        private void MenuOpen_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileManager fileManager = new FileManager();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "(.txt)|*.txt|BIN|*.bin|JSON|*.json|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            var dialogResult = openFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                var path = openFileDialog.FileName;
+                var extension = Path.GetExtension(path);
+                fileManager.openFile(path, extension, ref animalsManager, ref foodManager);
+                UpdateListOfAnimals();
+                UpdateFoodItemsList();
+            }
+        }
+
         private void MenuSaveAsJSON_OnClick(object sender, RoutedEventArgs e)
         {
             FileManager fileManager = new FileManager();
@@ -876,29 +895,8 @@ namespace Assignment_2_ApuAnimalPark
             if (dialogResult == true)
             {
                 var path = saveFileDialog.FileName;
-                fileManager.saveFileAsJSON(animalsManager, foodManager,path);
+                fileManager.SerializeJSON(animalsManager, foodManager, path);
             }
-        }
-
-        private void MenuOpen_OnClick(object sender, RoutedEventArgs e)
-        {
-            FileManager fileManager = new FileManager();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "(.txt)|.*txt|JSON|.json|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-
-            var dialogResult = openFileDialog.ShowDialog();
-
-            if (dialogResult == true)
-            {
-                var path = openFileDialog.FileName;
-                var extension = Path.GetExtension(path);
-                fileManager.openFile(path,extension,ref animalsManager, ref foodManager);
-                UpdateListOfAnimals();
-                UpdateFoodItemsList();
-            }
-
-
         }
 
         private void MenuSaveAsBinary_OnClick(object sender, RoutedEventArgs e)
@@ -919,7 +917,27 @@ namespace Assignment_2_ApuAnimalPark
 
         private void MenuSaveAsXML_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            FileManager fileManager = new FileManager();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "(.xml)|.xml";
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                var path = saveFileDialog.FileName;
+                fileManager.SerializeXml(animalsManager, foodManager, path);
+            }
+        }
+
+        private void MenuNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            // THIS RESETS BOTH MANAGERS
+            foodManager = new FoodManager();
+            animalsManager = new AnimalsManager();
+            UpdateListOfAnimals();
+            UpdateFoodItemsList();
         }
     }
 }

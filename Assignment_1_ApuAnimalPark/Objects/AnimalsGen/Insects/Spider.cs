@@ -13,6 +13,10 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects
         private FoodSchedule foodSchedule;
         public string Venomous { get; set; }
 
+        public Spider()
+        {
+            Venomous = string.Empty;
+        }
         public Spider(string venomous,int numberOfLegs):base(numberOfLegs)
         {
             Venomous = venomous;

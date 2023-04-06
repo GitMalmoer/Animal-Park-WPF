@@ -14,6 +14,12 @@ namespace Assignment_2_ApuAnimalPark.Objects.Birds
         public int NeckLength { get; set; }
         public string BuryHead { get; set; }
 
+        public Ostrich()
+        {
+            NeckLength = 0;
+            BuryHead = String.Empty;
+        }
+
         public Ostrich(int neckLength, string buryHead, int wingsSpread, double beakLength): base(wingsSpread, beakLength)
         {
             NeckLength = neckLength;

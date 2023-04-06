@@ -15,6 +15,12 @@ namespace Assignment_2_ApuAnimalPark.Objects.Marines
         private string Sound { get;}
 
 
+        public Marine()
+        {
+            Weight = 0;
+            Sound = string.Empty;
+        }
+
         public Marine(double weight, string sound)
         {
             Weight = weight;

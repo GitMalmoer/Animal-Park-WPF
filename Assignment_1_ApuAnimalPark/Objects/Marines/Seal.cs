@@ -13,6 +13,11 @@ namespace Assignment_2_ApuAnimalPark.Objects.Marines
         private FoodSchedule foodSchedule;
         public string Can_do_tricks { get; set; }
 
+        public Seal()
+        {
+            Can_do_tricks = string.Empty;
+        }
+
         public Seal(double weight,string sound,string canDoTricks) : base(weight,sound)
         {
             Can_do_tricks = canDoTricks;

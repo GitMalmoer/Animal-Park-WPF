@@ -15,6 +15,12 @@ namespace Assignment_2_ApuAnimalPark.Objects.Birds
         private int Wings_Spread { get; set; }
         private double Beak_Length { get; set; }
 
+        public Bird()
+        {
+            Wings_Spread = 0;
+            Beak_Length = 0;
+        }
+
         public Bird(int wingsSpread, double beakLength)
         {
             Wings_Spread = wingsSpread;

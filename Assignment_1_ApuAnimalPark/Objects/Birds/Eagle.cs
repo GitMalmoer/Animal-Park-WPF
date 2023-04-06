@@ -15,6 +15,12 @@ namespace Assignment_2_ApuAnimalPark.Objects.Birds
         public string Color { get; set; }
         public int Flight_Speed { get; set; }
 
+        public Eagle()
+        {
+            Color = "";
+            Flight_Speed = 0;
+        }
+
         public Eagle(int flightSpeed, string color, int wingsSpread, double beakLength) : base(wingsSpread, beakLength)
         {
             Flight_Speed = flightSpeed;

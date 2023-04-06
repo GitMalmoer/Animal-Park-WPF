@@ -7,10 +7,20 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Assignment_2_ApuAnimalPark.Objects.Food;
 using Newtonsoft.Json;
+using Assignment_2_ApuAnimalPark.Objects.Mammals;
+using System.Xml.Serialization;
+using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.Insects;
+using Assignment_2_ApuAnimalPark.Objects.Birds;
+using Assignment_2_ApuAnimalPark.Objects.Marines;
 
 namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
 {
     [Serializable]
+    [XmlInclude(typeof(Mammal))]
+    [XmlInclude(typeof(Insect))]
+    [XmlInclude(typeof(Marine))]
+    [XmlInclude(typeof(Bird))]
+    [XmlInclude(typeof(FoodItem))]
     public abstract class Animal : IAnimal, IComparable<Animal>
     {
         // WHEN YOU ADD NEW ANIMAL SPECIE REMEMBER TO ADD IT INTO <ANIMAL_NAME>SPECIES ENUM!
@@ -21,6 +31,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
         public CategoryType Category { get; set; }
         public string AnimalPicture { get; set; }
         [JsonIgnore]
+        [XmlElement("FoodItem")]
         public FoodItem FoodItem { get; set; } 
 
         public Animal()

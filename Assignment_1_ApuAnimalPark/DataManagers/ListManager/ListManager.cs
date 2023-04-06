@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 
 namespace Assignment_2_ApuAnimalPark.Objects.ListManager
@@ -13,6 +14,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.ListManager
     public class ListManager<T> : IListManager<T>
     {
         [JsonRequired]
+        [XmlElement("listItem")]
         private protected List<T> _list;
 
         public ListManager()
@@ -20,6 +22,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.ListManager
             _list = new List<T>();
         }
 
+        [XmlElement("count")]
         [JsonIgnore]
         public int Count => _list.Count;
 

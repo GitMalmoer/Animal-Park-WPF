@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Mammals
 {
+    [XmlInclude(typeof(Dog))]
     [Serializable]
     public class Dog : Mammal
     {
         private FoodSchedule foodSchedule;
         public string Breed { get; set; }
+
+        public Dog()
+        {
+            Breed = string.Empty;
+        }
 
         public Dog(int numOfTeeth,int tailLength, string breed) : base(numOfTeeth, tailLength)
         {

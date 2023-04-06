@@ -13,6 +13,10 @@ namespace Assignment_2_ApuAnimalPark.Objects.Marines
         private FoodSchedule foodSchedule;
         public string WildOrCaptivity { get; set; }
 
+        public Dolphin()
+        {
+            WildOrCaptivity = string.Empty;
+        }
         public Dolphin(double weight, string sound, string wildOrCaptivity) : base(weight, sound)
         {
             WildOrCaptivity = wildOrCaptivity;
