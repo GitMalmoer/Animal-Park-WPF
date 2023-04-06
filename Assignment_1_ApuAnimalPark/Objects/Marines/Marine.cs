@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
+using Assignment_2_ApuAnimalPark.Objects.Birds;
 
 namespace Assignment_2_ApuAnimalPark.Objects.Marines
 {
     [Serializable]
+    [XmlInclude(typeof(Dolphin))]
+    [XmlInclude(typeof(Seal))]
     public abstract class Marine : Animal
     {
         private double Weight { get;}

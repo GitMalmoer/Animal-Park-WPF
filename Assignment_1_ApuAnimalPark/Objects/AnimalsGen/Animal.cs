@@ -30,9 +30,10 @@ namespace Assignment_2_ApuAnimalPark.Objects.AnimalsGen
         public GenderTypes Gender { get; set; }
         public CategoryType Category { get; set; }
         public string AnimalPicture { get; set; }
-        [JsonIgnore]
+
+        [JsonRequired]
         [XmlElement("FoodItem")]
-        public FoodItem FoodItem { get; set; } 
+        public FoodItem FoodItem { get; set; } = new FoodItem();
 
         public Animal()
         {

@@ -722,9 +722,11 @@ namespace Assignment_2_ApuAnimalPark
 
             if (selectedAnimal != null)
             {
-                var eaterType = selectedAnimal.GetFoodSchedule().EaterType;
-                lblEaterType.Content = eaterType; // setting up eater type
-
+                if (selectedAnimal.GetFoodSchedule() != null)
+                {
+                    var eaterType = selectedAnimal.GetFoodSchedule().EaterType;
+                    lblEaterType.Content = eaterType; // setting up eater type
+                }
                 UpdateFoodScheduleList(selectedAnimal);
             }
 
@@ -861,7 +863,6 @@ namespace Assignment_2_ApuAnimalPark
                 //The default behavior of the ListBox control is to call the ToString() method on each object in the Items collection and display the resulting string in the list.
                 lstFoodItems.Items.Add(foodManager.GetAt(i)); // tostring method is not needed!
             }
-
         }
 
         private void MenuOpen_OnClick(object sender, RoutedEventArgs e)
@@ -911,7 +912,11 @@ namespace Assignment_2_ApuAnimalPark
             if (dialogResult == true)
             {
                 var path = saveFileDialog.FileName;
-                fileManager.SerializeBinary(animalsManager, foodManager, path);
+                bool isSaved = fileManager.SerializeBinary(animalsManager, foodManager, path);
+                if (isSaved)
+                {
+                    MessageBox.Show("File has been saved at: " + path);
+                }
             }
         }
 
@@ -927,7 +932,11 @@ namespace Assignment_2_ApuAnimalPark
             if (dialogResult == true)
             {
                 var path = saveFileDialog.FileName;
-                fileManager.SerializeXml(animalsManager, foodManager, path);
+                bool isSaved = fileManager.SerializeXml(animalsManager, foodManager, path);
+                if (isSaved)
+                {
+                    MessageBox.Show("File has been saved at: "+path);
+                }
             }
         }
 

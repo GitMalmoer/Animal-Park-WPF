@@ -25,7 +25,8 @@ namespace Assignment_2_ApuAnimalPark.Objects
 
         public int IdGenerator()
         {
-            AnimalsCounter += 1;
+            int numOfListItems = Count;
+            AnimalsCounter = numOfListItems + 1;
             return AnimalsCounter;
         }
 

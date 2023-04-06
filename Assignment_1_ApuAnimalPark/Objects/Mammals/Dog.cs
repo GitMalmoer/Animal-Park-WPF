@@ -13,6 +13,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.Mammals
     [Serializable]
     public class Dog : Mammal
     {
+        [XmlElement("foodSchedule")]
         private FoodSchedule foodSchedule;
         public string Breed { get; set; }
 

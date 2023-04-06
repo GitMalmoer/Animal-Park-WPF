@@ -22,22 +22,17 @@ namespace ApuAnimalPark.DataManagers
 {
     class FileManager
     {
-        private List<Animal> _animals;
-        private string defaultPath = "../SavedFiles/";
         private string currentVersion = "Version 1";
-        public FileManager()
-        {
-             _animals = new List<Animal>();
-        }
 
         public void SerializeJSON(AnimalsManager animalsManager, FoodManager foodManager,string path)
         {
+            List<Animal> animals = new List<Animal>();
             for (int i = 0; i < animalsManager.Count; i++)
             {
-                _animals.Add(animalsManager.GetAt(i));
+                animals.Add(animalsManager.GetAt(i));
             }
 
-            var animalsListSerialized = JsonConvert.SerializeObject(_animals,formatting:Formatting.Indented);
+            var animalsListSerialized = JsonConvert.SerializeObject(animals, formatting:Formatting.Indented);
 
             using (StreamWriter sw = new StreamWriter(path))
             {
@@ -72,24 +67,23 @@ namespace ApuAnimalPark.DataManagers
         {
             bool serializeOk = false;
             FileStream fileStream = null;
-            string errorMsg = "";
 
             try
             {
+                List<Animal> animals = new List<Animal>();
                 for (int i = 0; i < animalsManager.Count; i++)
                 {
-                    _animals.Add(animalsManager.GetAt(i));
+                    animals.Add(animalsManager.GetAt(i));
                 }
 
                 fileStream = new FileStream(path, mode: FileMode.Create);
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(fileStream, _animals);
+                binaryFormatter.Serialize(fileStream, animals);
                 serializeOk = true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-                errorMsg = e.Message;
                 serializeOk = false;
             }
             finally
@@ -158,17 +152,18 @@ namespace ApuAnimalPark.DataManagers
             return deserializeOK;
         }
 
-        public void SerializeXml(AnimalsManager animalsManager, FoodManager foodManager, string path)
+        public bool SerializeXml(AnimalsManager animalsManager, FoodManager foodManager, string path)
         {
             string fileName = Path.GetFileName(path);
             string FolderAnimals = Path.Combine(Environment.CurrentDirectory, $"{fileName.Split('.')[0]}Folder", "Animals.xml");
             string folderFoodItems = Path.Combine(Environment.CurrentDirectory, $"{fileName.Split('.')[0]}Folder", "FoodItems.xml");
             string folderPath = Path.Combine(Environment.CurrentDirectory, $"{fileName.Split('.')[0]}Folder");
 
-            Directory.CreateDirectory(folderPath);
+            bool serializeOk = false;
 
             try
             {
+                Directory.CreateDirectory(folderPath);
                 List<Animal> animals = new List<Animal>();
                 List<FoodItem> foodItems = new List<FoodItem>();
 
@@ -194,13 +189,15 @@ namespace ApuAnimalPark.DataManagers
                 {
                     serializerFoodItems.Serialize(writer, foodItems);
                 }
+
+                serializeOk = true;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                serializeOk = false;
                 MessageBox.Show(e.Message);
-                throw;
             }
+            return serializeOk;
         }
 
         public bool DeserializeXml(string path, ref AnimalsManager animalsManager, ref FoodManager foodManager)
@@ -209,29 +206,49 @@ namespace ApuAnimalPark.DataManagers
             FileStream fileStream = null;
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Animal>));
+                // CLEARING THE EXISTING VALUES IN MANAGERS
+                animalsManager = new AnimalsManager();
+                foodManager = new FoodManager();
 
                 using (fileStream = new FileStream(path, FileMode.Open))
                 {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Animal>));
                     List<Animal> animals = (List<Animal>)serializer.Deserialize(fileStream);
                     if (animals != null && animals.Count > 0)
                     {
-                        deserializeOk = true;
+                        //SETTING THE ANIMAL LIST IN ANIMALS MANAGER
+                            animalsManager.setAnimalList(animals);
+
+                            //LIST OF FOOD ITEMS
+                            List<FoodItem> foodItems = new List<FoodItem>();
+
+                            // POPULATING DICTIONARY IN ANIMALS MANAGER
+                            foreach (Animal animal in animals)
+                            {
+                                animalsManager.AnimalFoodItemDictionary.Add(animal.Id, animal.FoodItem);
+
+                                // POPULATING foodItems with no repeating items
+                                if (!foodItems.Contains(animal.FoodItem))
+                                {
+                                    foodItems.Add(animal.FoodItem);
+                                }
+                            }
+                            // SETTING FOOD MANAGER 
+                            foodManager.setFoodList(foodItems);
+                            deserializeOk = true;
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.Message);
                 deserializeOk = false;
-                throw;
             }
             finally
             {
                 if(fileStream != null)
                 { fileStream.Close(); }
             }
-
 
             return deserializeOk;
         }

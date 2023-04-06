@@ -10,6 +10,7 @@ namespace Assignment_2_ApuAnimalPark.Objects.Marines
     [Serializable]
     public class Seal : Marine
     {
+
         private FoodSchedule foodSchedule;
         public string Can_do_tricks { get; set; }
 

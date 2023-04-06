@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen;
 using Assignment_2_ApuAnimalPark.Objects.AnimalsGen.FoodScheduleFolder;
 using Assignment_2_ApuAnimalPark.Objects.Mammals;
@@ -10,6 +11,8 @@ using Assignment_2_ApuAnimalPark.Objects.Mammals;
 namespace Assignment_2_ApuAnimalPark.Objects.Birds
 {
     [Serializable]
+    [XmlInclude(typeof(Eagle))]
+    [XmlInclude(typeof(Ostrich))]
     public abstract class Bird : Animal
     {
         private int Wings_Spread { get; set; }

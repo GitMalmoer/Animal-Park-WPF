@@ -51,7 +51,7 @@ namespace Assignment_2_ApuAnimalPark.FoodItemsWindow
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            bool ingredientOk = FoodItem.Ingredients.Add(txtIngredientName.Text);
+            bool ingredientOk = FoodItem.Add(txtIngredientName.Text);
             if (ingredientOk == false)
             {
                 MessageBox.Show("Invalid Ingredient");
@@ -63,12 +63,11 @@ namespace Assignment_2_ApuAnimalPark.FoodItemsWindow
         {
             lstIngredients.Items.Clear();
 
-            var ingredients = FoodItem.Ingredients;
 
             for (int i = 0; i < FoodItem.Ingredients.Count; i++)
             {
-                if(!String.IsNullOrEmpty(ingredients.GetAt(i)))
-                    lstIngredients.Items.Add(ingredients.GetAt(i));
+                if(!String.IsNullOrEmpty(FoodItem.GetAt(i)))
+                    lstIngredients.Items.Add(FoodItem.GetAt(i));
             }
         }
 
@@ -77,11 +76,11 @@ namespace Assignment_2_ApuAnimalPark.FoodItemsWindow
         {
             int index = lstIngredients.SelectedIndex;
 
-            if (FoodItem.Ingredients.GetAt(index) != null)
+            if (FoodItem.GetAt(index) != null)
             {
                 if (!string.IsNullOrEmpty(txtIngredientName.Text))
                 {
-                    FoodItem.Ingredients.ChangeAt(txtIngredientName.Text,index);
+                    FoodItem.ChangeAt(txtIngredientName.Text,index);
                     UpdateList();
                 }
                 else
@@ -95,9 +94,9 @@ namespace Assignment_2_ApuAnimalPark.FoodItemsWindow
         {
             int index = lstIngredients.SelectedIndex;
 
-            if (FoodItem.Ingredients.GetAt(index) != null )
+            if (FoodItem.GetAt(index) != null )
             {
-                FoodItem.Ingredients.DeleteAt(index);
+                FoodItem.DeleteAt(index);
                 UpdateList();
             }
         }
